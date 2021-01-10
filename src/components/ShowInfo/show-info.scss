@@ -1,0 +1,24 @@
+@import '../../styles/base-colors.scss';
+
+.container-show-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+
+  .info-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    color: $color-light-gray;
+  }
+
+  .info-data {
+    font-size: 12px;
+    text-transform: capitalize;
+    color: $color-white;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+}

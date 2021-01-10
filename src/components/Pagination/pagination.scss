@@ -1,0 +1,35 @@
+@import '../../styles/base-colors.scss';
+
+.container-pagination {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  
+  .arrow {
+    color:  $color-dark-red;
+    font-size: 2em;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+      transition: 0.4s;
+    }
+  }
+
+  .arrow-disabled {
+    color:  $color-dark-gray;
+    font-size: 2em;
+    cursor: default;
+  }
+  
+  .number-page {
+    align-self: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: $color-light-gray;
+    margin: 0 1em 0 1em;
+    cursor: default;
+  }
+}

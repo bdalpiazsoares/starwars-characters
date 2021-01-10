@@ -1,0 +1,27 @@
+@import '../../styles/base-colors.scss';
+
+.character-card-container {
+  background-color: $color-dark-gray;
+  padding: 1em;
+  border-radius: 4px;
+
+  .header-card {
+    display: flex;
+    justify-content: space-between;
+
+    .info-icon {
+      cursor: pointer;
+      
+      &:hover {
+        opacity: 0.7;
+        transition: 0.4s;
+      }
+    }
+  }
+
+  .container-character-info {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+}
