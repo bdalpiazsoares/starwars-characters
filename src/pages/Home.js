@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import apiService from '../services/apiService';
+import toast from '../utils/toast';
 
 import CharacterList from '../components/CharacterList/CharacterList';
 import Header from '../components/Header/Header';
-import SearchBar from '../components/SearchBar/SearchBar';
+import Loading from '../components/Loading/Loading';
 import Pagination from '../components/Pagination/Pagination';
+import SearchBar from '../components/SearchBar/SearchBar';
 
 function Home() {
   let textSearchTimeOut = 0;
@@ -14,17 +16,27 @@ function Home() {
   const [page, setPage] = useState(1);
   const [nextPage, setNextPage] = useState();
   const [count, setCount] = useState();
+  const [nothingFound, setNothingFound] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     textSearchTimeOut = setTimeout(() => getCharacters(), 500);
   }, [page, textSearchBar]);
   
   async function getCharacters() {
-    const response = await apiService.get(`/people/?search=${textSearchBar}&page=${page}`);
-    setNextPage(response.data.next);
-    if (response.data) {
-      setCharacterList(response.data.results);
-      setCount(response.data.count)
+    try {
+      setLoading(true);
+      const response = await apiService.get(`/people/?search=${textSearchBar}&page=${page}`);
+      setNextPage(response.data.next);
+      if (response.data) {
+        setCharacterList(response.data.results);
+        setCount(response.data.count)
+      }
+      setLoading(false);
+    } catch(err) {
+      setLoading(false);
+      setNothingFound(true);
+      toast.showErrorMessage('Erro ao tentar buscar os dados');
     }
   }
 
@@ -51,13 +63,20 @@ function Home() {
         clearText={() => setTextSearchBar('')}
         textSearchBar={textSearchBar}
       />
-      <CharacterList characterList={characterList} />
-      <Pagination
-        page={page}
-        nextPage={nextPage}
-        onClickArrowLeft={onClickArrowLeft}
-        onClickArrowRight={onClickArrowRight}
-      />
+      {loading ? (<Loading />) : (
+        <CharacterList
+          characterList={characterList}
+          nothingFound={nothingFound}
+        />
+      )}
+      {!!characterList.length && (
+        <Pagination
+          page={page}
+          nextPage={nextPage}
+          onClickArrowLeft={onClickArrowLeft}
+          onClickArrowRight={onClickArrowRight}
+        />
+      )}
     </>
   );
 }

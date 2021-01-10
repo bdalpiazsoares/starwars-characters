@@ -1,9 +1,10 @@
 import React from 'react';
 import CharacterCard from '../CharacterCard/CharacterCard';
+import NothingFound from '../NothinFound/NothingFound';
 
 import './character-list.scss';
 
-function CharacterList({ characterList = [], nothingFound = false, openModal }) {
+function CharacterList({ characterList = [], nothingFound = false }) {
 
   function renderContent() {
     if (!nothingFound) {
@@ -19,7 +20,7 @@ function CharacterList({ characterList = [], nothingFound = false, openModal }) 
       );
     } else {
       return (
-        <span>nothing was found :(</span>
+        <NothingFound />
       );
     }
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiX, FiSearch} from 'react-icons/fi';
+import { FiX, FiSearch } from 'react-icons/fi';
 
 import './search-bar.scss';
 

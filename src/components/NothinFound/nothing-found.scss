@@ -1,0 +1,10 @@
+.container-nothing-found {
+  display: flex;
+  align-items: center;
+  margin-top: 3em;
+
+  .text-nothing-found {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+}
