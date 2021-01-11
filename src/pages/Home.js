@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import apiService from '../services/apiService';
-import toast from '../utils/toast';
 
 import CharacterList from '../components/CharacterList/CharacterList';
 import Header from '../components/Header/Header';
@@ -36,7 +35,6 @@ function Home() {
     } catch(err) {
       setLoading(false);
       setNothingFound(true);
-      toast.showErrorMessage('Erro ao tentar buscar os dados');
     }
   }
 
