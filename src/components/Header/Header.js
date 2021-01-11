@@ -2,12 +2,12 @@ import React from 'react';
 
 import logo from '../../assets/starwars-logo.png';
 
-import './header.scss';
+import styles from './header.module.scss';
 
 function Header() {
   return (
     <img
-      className='logo-size'
+      className={styles.logoSize}
       src={logo}
       alt='logo'
     />

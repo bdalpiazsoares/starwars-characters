@@ -1,18 +1,16 @@
 import React from 'react';
 import { FiX, FiSearch } from 'react-icons/fi';
 
-import './search-bar.scss';
+import styles from './search-bar.module.scss';
 
 function SearchBar({ onChange = () => {}, clearText = () => {}, textSearchBar }) {
   return (
-    <div className='container'>
-      <div className='search-bar-container'>
-        <div className='input-container'>
-          <FiSearch
-            className='search-icon'
-          />
+    <div className={styles.container}>
+      <div className={styles.searchBarContainer}>
+        <div className={styles.inputContainer}>
+          <FiSearch className={styles.searchIcon} />
           <input
-            className='search-bar'
+            className={styles.searchBar}
             type='text'
             placeholder='Ex: "luke skywalker, darth vader"'
             value={textSearchBar}
@@ -20,7 +18,7 @@ function SearchBar({ onChange = () => {}, clearText = () => {}, textSearchBar })
           />
         </div>
         <FiX
-          className='clear-icon'
+          className={styles.clearIcon}
           onClick={() => clearText()}
         />
       </div>

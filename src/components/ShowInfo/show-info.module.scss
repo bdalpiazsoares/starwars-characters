@@ -1,11 +1,11 @@
 @import '../../styles/base-colors.scss';
 
-.container-show-info {
+.containerShowInfo {
   display: flex;
   flex-direction: column;
   margin-right: 1em;
 
-  .info-title {
+  .infoTitle {
     font-size: 10px;
     text-transform: uppercase;
     font-weight: bold;
@@ -14,7 +14,7 @@
     color: $color-light-gray;
   }
 
-  .info-data {
+  .infoData {
     font-size: 12px;
     text-transform: capitalize;
     color: $color-white;

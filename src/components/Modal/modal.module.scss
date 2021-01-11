@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   
-  .container-modal {
+  .containerModal {
     border-radius: 4px;
     background-color: $color-dark;
     height: auto;
@@ -32,29 +32,50 @@
       width: 80%;
     }
 
-    .content-modal {
+    .contentModal {
       display: flex;
       flex-direction: column;
 
-      .name-modal {
+      .containerInfo {
+        display: flex;
+        flex-direction: row;
+        margin-left: 2em;
+      }
+
+      .containerList {
+        padding-inline-start: 3em;
+  
+        .list {
+          font-size: 12px;
+          text-transform: capitalize;
+          color: $color-white;
+          font-weight: bold;
+          letter-spacing: 1px;
+          margin-bottom: 6px;
+          list-style-type: square;
+        }
+      }
+
+      .nameModal {
         color: $color-white;
         font-weight: bold;
         font-size: 16px;
         margin-bottom: 10px;
       }
 
-      .container-topic {
+      .containerTopic {
         margin-top: 28px;
 
-        .container-header-title {
+        .containerHeaderTitle {
           display: flex;
+          margin-bottom: 4px;
         }
 
-        .topic-title {
+        .topicTitle {
           margin-left: 1em;
         }
 
-        .container-modal-data {
+        .containerModalData {
           display: flex;
           flex-direction: row;
           margin-top: 2px;
@@ -63,17 +84,17 @@
     }
 
 
-    .container-button-modal {
+    .containerButtonModal {
       display: flex;
       justify-content: flex-end;
       align-items: flex-end;
       margin-top: 2em;
 
-      .button-close-modal {
+      .buttonCloseModal {
         background-color: $color-dark-red;
         border: none;
         outline: none;
-        color: $color-white;
+        color: $color-dark;
         font-weight: bold;
         text-transform: uppercase;
         padding: 6px 10px;

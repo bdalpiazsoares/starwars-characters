@@ -1,12 +1,12 @@
 import React from 'react';
 
-import './show-info.scss'
+import styles from './show-info.module.scss'
 
 function ShowInfo({ title, data }) {
   return (
-    <div className='container-show-info'>
-      <small className='info-title'>{title}</small>
-      <small className='info-data'>{data}</small>
+    <div className={styles.containerShowInfo}>
+      <small className={styles.infoTitle}>{title}</small>
+      <small className={styles.infoData}>{data}</small>
     </div>
   );
 }

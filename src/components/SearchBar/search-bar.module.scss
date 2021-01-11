@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
 
-  .search-bar-container {
+  .searchBarContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -23,7 +23,7 @@
       width: 80%;
     }
 
-    .clear-icon {
+    .clearIcon {
       color: $color-dark;
       cursor: pointer;
       font-size: 20px;
@@ -34,17 +34,17 @@
       }
     }
 
-    .input-container {
+    .inputContainer {
       display: flex;
       align-items: center;
       width: 100%;
 
-      .search-icon {
+      .searchIcon {
         color: $color-gray;
         font-size: 24px;
       }
       
-      .search-bar {
+      .searchBar {
         margin-left: 14px;
         outline: none;
         border: none;

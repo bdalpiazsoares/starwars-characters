@@ -1,6 +1,6 @@
 @import '../../styles/base-colors.scss';
 
-.container-pagination {
+.containerPagination {
   display: flex;
   flex-direction: row;
   align-self: center;
@@ -18,13 +18,13 @@
     }
   }
 
-  .arrow-disabled {
+  .arrowDisabled {
     color:  $color-dark-gray;
     font-size: 2em;
     cursor: default;
   }
   
-  .number-page {
+  .numberPage {
     align-self: center;
     font-size: 18px;
     font-weight: bold;

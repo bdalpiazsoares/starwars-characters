@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 
-import Divider from '../Divider/Divider';
 import Modal from '../Modal/Modal';
 import ShowInfo from '../ShowInfo/ShowInfo';
 
-import './character-card.scss';
-import '../../styles/base-styles.scss';
+import styles from './character-card.module.scss';
 
 function CharacterCard({ item }) {
   const [openModal, setOpenModal] = useState(false);
@@ -28,16 +26,16 @@ function CharacterCard({ item }) {
           closeModal={() => setOpenModal(false)}
         />)
       }
-      <div className='character-card-container'>
-        <div className='header-card'>
-          <span className='character-name'>{item.name}</span>
+      <div className={styles.characterCardContainer}>
+        <div className={styles.headerCard}>
+          <span className='default-title'>{item.name}</span>
           <FaInfoCircle
-            className='info-icon'
+            className={styles.infoIcon}
             onClick={() => setOpenModal(true)}
           />
         </div>
-        <Divider />
-        <div className='container-character-info'>
+        <div className='divider' />
+        <div className={styles.containerCharacterInfo}>
           {renderInfo('Birth Year', item.birth_year)}
           {renderInfo('Height', item.height)}
           {renderInfo('Mass', item.mass)}

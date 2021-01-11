@@ -4,7 +4,6 @@ import apiService from '../services/apiService';
 
 import CharacterList from '../components/CharacterList/CharacterList';
 import Header from '../components/Header/Header';
-import Loading from '../components/Loading/Loading';
 import Pagination from '../components/Pagination/Pagination';
 import SearchBar from '../components/SearchBar/SearchBar';
 
@@ -30,6 +29,11 @@ function Home() {
       if (response.data) {
         setCharacterList(response.data.results);
         setCount(response.data.count)
+        if (!response.data.count) {
+          setNothingFound(true);
+        } else {
+          setNothingFound(false);
+        }
       }
       setLoading(false);
     } catch(err) {
@@ -61,7 +65,7 @@ function Home() {
         clearText={() => setTextSearchBar('')}
         textSearchBar={textSearchBar}
       />
-      {loading ? (<Loading />) : (
+      {loading ? (<div className='spinner' />) : (
         <CharacterList
           characterList={characterList}
           nothingFound={nothingFound}

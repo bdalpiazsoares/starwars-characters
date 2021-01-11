@@ -3,11 +3,9 @@ import { FaFilm, FaGlobe, FaSpaceShuttle } from 'react-icons/fa';
 
 import apiService from '../../services/apiService';
 
-import Divider from '../Divider/Divider';
 import ShowInfo from '../ShowInfo/ShowInfo';
 
-import './modal.scss';
-import '../../styles/base-styles.scss';
+import styles from './modal.module.scss';
 
 function Modal({ item, closeModal }) {
   const [planetData, setPlanetData] = useState({});
@@ -54,15 +52,17 @@ function Modal({ item, closeModal }) {
     });
   }
 
-  function renderTopic(icon, title, renderTest) {
+  function renderTopic(icon, title, render) {
     return (
-      <div className='container-topic'>
-        <div className='container-header-title'>
+      <div className={styles.containerTopic}>
+        <div className={styles.containerHeaderTitle}>
           {icon}
-          <span className='character-name topic-title'>{title}</span>
+          <div className={styles.topicTitle}>
+            <span className='default-title'>{title}</span>
+          </div>
         </div>
-        <div className='container-modal-data'>
-          {renderTest()}
+        <div className={styles.containerModalData}>
+          {render()}
         </div>
       </div>
     );
@@ -79,33 +79,38 @@ function Modal({ item, closeModal }) {
 
   function renderListInfo(list) {
     return (
-      <ul>
+      <ul className={styles.containerList}>
         {list.map((item) => (
-          <li key={item.data.url}>{item.data.title || item.data.name}</li>
+          <li
+            key={item.data.url}
+            className={styles.list}
+          >
+            {item.data.title || item.data.name}
+          </li>
         ))}
       </ul>
     );
   }
   
   return (
-    <div className='modal'>
-      <div className='container-modal'>
-        <div className='content-modal'>
-          <span className='character-name'>{item.name}</span>
-          <Divider />
-          {planetData && renderTopic(<FaGlobe />, 'Home World', () => (
-            <>
-              {planetData.name && renderInfo('Name', planetData.name)}
-              {planetData.population && renderInfo('Population', planetData.population)}
-              {planetData.climate && renderInfo('Climate', planetData.climate)}
-            </>
-          ))}
-          {!!starShips.length && renderTopic(<FaSpaceShuttle />,'Star Ships', () => renderListInfo(starShips))}
-          {!!films.length && renderTopic(<FaFilm />,'Films', () => renderListInfo(films))}
+    <div className={styles.modal}>
+      <div className={styles.containerModal}>
+        <div className={styles.contentModal}>
+          <span className='default-title'>{item.name}</span>
+          <div className='divider' />
+            {planetData && renderTopic(<FaGlobe />, 'Home World', () => (
+              <div className={styles.containerInfo}>
+                {planetData.name && renderInfo('Name', planetData.name)}
+                {planetData.population && renderInfo('Population', planetData.population)}
+                {planetData.climate && renderInfo('Climate', planetData.climate)}
+              </div>
+            ))}
+            {!!starShips.length && renderTopic(<FaSpaceShuttle />,'Star Ships', () => renderListInfo(starShips))}
+            {!!films.length && renderTopic(<FaFilm />,'Films', () => renderListInfo(films))}
         </div>
-        <div className='container-button-modal'>
+        <div className={styles.containerButtonModal}>
           <button
-            className='button-close-modal'
+            className={styles.buttonCloseModal}
             onClick={closeModal}
           >
             close
