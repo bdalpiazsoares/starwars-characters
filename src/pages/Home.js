@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
 import apiService from '../services/apiService';
+import useDebounce from '../hooks/useDebounce';
 
 import CharacterList from '../components/CharacterList/CharacterList';
-import Header from '../components/Header/Header';
 import Pagination from '../components/Pagination/Pagination';
 import SearchBar from '../components/SearchBar/SearchBar';
 
+import styles from './home.module.scss';
+import logo from '../assets/starwars-logo.png';
+
 function Home() {
-  let textSearchTimeOut = 0;
   const [characterList, setCharacterList] = useState([]);
   const [textSearchBar, setTextSearchBar] = useState('');
   const [page, setPage] = useState(1);
@@ -17,14 +19,16 @@ function Home() {
   const [nothingFound, setNothingFound] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const debouncedSearch = useDebounce(textSearchBar, 500);
+
   useEffect(() => {
-    textSearchTimeOut = setTimeout(() => getCharacters(), 500);
-  }, [page, textSearchBar]);
+      getCharacters();
+  }, [page, debouncedSearch]);
   
   async function getCharacters() {
     try {
       setLoading(true);
-      const response = await apiService.get(`/people/?search=${textSearchBar}&page=${page}`);
+      const response = await apiService.get(`/people/?search=${debouncedSearch}&page=${page}`);
       setNextPage(response.data.next);
       if (response.data) {
         setCharacterList(response.data.results);
@@ -36,7 +40,7 @@ function Home() {
         }
       }
       setLoading(false);
-    } catch(err) {
+    } catch (err) {
       setLoading(false);
       setNothingFound(true);
     }
@@ -54,12 +58,15 @@ function Home() {
   function handleOnChangeTextSearch(text) {
     if (page !== 1) setPage(1);
     setTextSearchBar(text);
-    clearTimeout(textSearchTimeOut);
   }
 
   return (
     <>
-      <Header />
+      <img
+        className={styles.logoSize}
+        alt='logo'
+        src={logo}
+      />
       <SearchBar
         onChange={handleOnChangeTextSearch}
         clearText={() => setTextSearchBar('')}
