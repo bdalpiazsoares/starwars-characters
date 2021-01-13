@@ -11,9 +11,8 @@ export async function getCharactersService(debouncedSearch, page) {
 }
 
 export async function getHomeWorldService(homeworld) {
-  const idHomeWorld = homeworld.substring(21);
   try {
-    const response = await apiService.get(idHomeWorld);
+    const response = await apiService.get(homeworld);
     return response.data;
   } catch (error) {
     showErrorMessage('Error fetching homeworld');
@@ -24,8 +23,7 @@ export async function getFilmsService(films) {
   const promiseList = [];
 
   films?.forEach((item) => {
-    const idFilm = item.substring(21);
-    promiseList.push(apiService.get(idFilm));
+    promiseList.push(apiService.get(item));
   });
 
   return Promise.all(promiseList)
@@ -39,8 +37,7 @@ export async function getStarShipsService(starships) {
   const promiseList = [];
 
   starships?.forEach((item) => {
-    const idStarship = item.substring(21);
-    promiseList.push(apiService.get(idStarship));
+    promiseList.push(apiService.get(item));
   });
 
   return Promise.all(promiseList)
