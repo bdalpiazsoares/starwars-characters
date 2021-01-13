@@ -1,55 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { FaFilm, FaGlobe, FaSpaceShuttle } from 'react-icons/fa';
 
-import apiService from '../../services/apiService';
+import {
+  getFilmsService,
+  getHomeWorldService,
+  getStarShipsService
+} from '../../services/starwars';
 
 import ShowInfo from '../ShowInfo/ShowInfo';
 
 import styles from './modal.module.scss';
 
 function Modal({ item, closeModal }) {
-  const [planetData, setPlanetData] = useState({});
+  const [homeWorld, setHomeWorld] = useState({});
   const [films, setFilms] = useState([]);
   const [starShips, setStarShips] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getPlanet();
-    getFilms();
-    getStarShips();
+    getServices();
   }, []);
-
-  async function getPlanet() {
-    const idPlanet = item.homeworld.substring(21);
-    if (idPlanet) {
-      const response = await apiService.get(idPlanet);
-      setPlanetData(response.data)
-    }
-  }
-
-  async function getFilms() {
-    const promiseList = [];
-
-    item.films?.forEach((item) => {
-      const idFilm = item.substring(21);
-      promiseList.push(apiService.get(idFilm));
-    });
-
-    Promise.all(promiseList).then((res) => {
-      setFilms(res);
-    });
-  }
-
-  async function getStarShips() {
-    const promiseList = [];
-
-    item.starships?.forEach((item) => {
-      const idStarship = item.substring(21);
-      promiseList.push(apiService.get(idStarship));
-    });
-
-    Promise.all(promiseList).then((res) => {
-      setStarShips(res);
-    });
+  
+  async function getServices() {
+    setLoading(true);
+    const responseHomeWorld = await getHomeWorldService(item.homeworld);
+    setHomeWorld(responseHomeWorld);
+    const responseStarShips = await getStarShipsService(item.starships);
+    setStarShips(responseStarShips);
+    const responseFilms = await getFilmsService(item.films);
+    setFilms(responseFilms);
+    setLoading(false);
   }
 
   function renderTopic(icon, title, render) {
@@ -91,6 +71,26 @@ function Modal({ item, closeModal }) {
       </ul>
     );
   }
+
+  function renderData() {
+    if (loading) {
+      return (<div className='spinner' />);
+    } else {
+      return (
+        <>
+          {homeWorld && renderTopic(<FaGlobe />, 'Home World', () => (
+            <div className={styles.containerInfo}>
+              {homeWorld.name && renderInfo('Name', homeWorld.name)}
+              {homeWorld.population && renderInfo('Population', homeWorld.population)}
+              {homeWorld.climate && renderInfo('Climate', homeWorld.climate)}
+            </div>
+          ))}
+          {!!starShips?.length && renderTopic(<FaSpaceShuttle />,'Star Ships', () => renderListInfo(starShips))}
+          {!!films.length && renderTopic(<FaFilm />,'Films', () => renderListInfo(films))}
+        </>
+      );
+    }
+  }
   
   return (
     <div className={styles.modal}>
@@ -98,15 +98,7 @@ function Modal({ item, closeModal }) {
         <div className={styles.contentModal}>
           <span className='default-title'>{item.name}</span>
           <div className='divider' />
-            {planetData && renderTopic(<FaGlobe />, 'Home World', () => (
-              <div className={styles.containerInfo}>
-                {planetData.name && renderInfo('Name', planetData.name)}
-                {planetData.population && renderInfo('Population', planetData.population)}
-                {planetData.climate && renderInfo('Climate', planetData.climate)}
-              </div>
-            ))}
-            {!!starShips.length && renderTopic(<FaSpaceShuttle />,'Star Ships', () => renderListInfo(starShips))}
-            {!!films.length && renderTopic(<FaFilm />,'Films', () => renderListInfo(films))}
+          {renderData()}
         </div>
         <div className={styles.containerButtonModal}>
           <button

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import apiService from '../services/apiService';
 import useDebounce from '../hooks/useDebounce';
+import { getCharactersService } from '../services/starwars';
 
 import CharacterList from '../components/CharacterList/CharacterList';
 import Pagination from '../components/Pagination/Pagination';
@@ -26,24 +26,19 @@ function Home() {
   }, [page, debouncedSearch]);
   
   async function getCharacters() {
-    try {
-      setLoading(true);
-      const response = await apiService.get(`/people/?search=${debouncedSearch}&page=${page}`);
+    setLoading(true);
+    const response = await getCharactersService(debouncedSearch, page);
+    if (response && response.data) {
       setNextPage(response.data.next);
-      if (response.data) {
-        setCharacterList(response.data.results);
-        setCount(response.data.count)
-        if (!response.data.count) {
-          setNothingFound(true);
-        } else {
-          setNothingFound(false);
-        }
+      setCharacterList(response.data.results);
+      setCount(response.data.count)
+      if (!response.data.count) {
+        setNothingFound(true);
+      } else {
+        setNothingFound(false);
       }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      setNothingFound(true);
     }
+    setLoading(false);
   }
 
   function onClickArrowLeft() {
